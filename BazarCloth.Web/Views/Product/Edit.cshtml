@@ -1,0 +1,117 @@
+﻿@model BazarCloth.Web.Models.ViewModels.editProductViewModel
+
+<h2>Edit Product</h2>
+
+@{ 
+
+    var ImageUrl = !string.IsNullOrEmpty(Model.ImageUrl) ? Model.ImageUrl : "/Content/noimage.png";
+}
+
+
+<form id="EditProductFrm">
+    <div class="row">
+        <div class="col-md-8">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <div class="form-group">
+                <label>Catagory</label>
+                <select class="form-control" name="CatagoryId">
+                    @foreach (var cat in Model.AvailableCategories)
+                    {
+                        var selected = cat.Id == Model.CatagoryId ? "selected" : string.Empty;
+                        <option value="@cat.Id" @selected>@cat.Name</option>
+                    }
+                </select>
+
+            </div>
+            <div class="form-group">
+                <label>Name</label>
+                <input name="Name" class="form-control" placeholder="Catagroy's Name" value="@Model.Name" />
+
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input name="Description" class="form-control" placeholder="Catagroy's Name" value="@Model.Description" />
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input name="Price" class="form-control" placeholder="Catagroy's Price" value="@Model.Price" />
+            </div>
+            <div class="form-group">
+                <label>Image</label>
+                <input id="ImageUrl" name="ImageUrl" type="hidden" />
+                <input id="imageUpload" name="Image" type="file" class="form-control" accept=".png,.jpg" />
+
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <img id="ProductImge" src="@ImageUrl" class="img-responsice" />
+        </div>
+    </div>
+
+    <button id="editbtnProduct" class="btn btn-primary" type="button">Edit</button>
+
+    <button id="cancelbtnProduct" class="btn btn-primary" type="button">Cancel</button>
+</form>
+
+
+
+<script type="text/javascript">
+    $("#imageUpload").change(function () {
+        var element = this;
+        var fromdata = new FormData();
+        var totalfiles = element.files.length;
+
+        for (var i = 0; i < totalfiles; i++) {
+            var file = element.files[i];
+
+            fromdata.append("photo", file);
+        }
+
+        $.ajax(
+            {
+                url: '@Url.Action("UploadImage","Shared")',
+                type: 'POST',
+                dataType: 'Json',
+                data: fromdata,
+                contentType: false,
+                processData:false
+            }).done(function (result) {
+                alert("Success");
+
+                if (result.Success == true) {
+                    $("#ProductImge").attr('src', result.ImageURL);
+
+                    $("#ImageUrl").val(result.ImageURL);
+                }
+            }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Fail");
+            });
+       
+    });
+
+    $("#editbtnProduct").click(function () {
+
+        $.ajax({
+            url:'@Url.Action("Edit", "Product")', //'/Product/Edit',
+            type: 'POST',
+            data: $("#EditProductFrm").serialize()
+        }).done(function (response) {
+            $("#tableContainer").html(response);
+            $("#EditProductFrm").html("");
+
+            focusAction("tableContainer");
+        }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Something is wrong")
+        });
+    });
+
+
+    $("#cancelbtnProduct").click(function () {
+
+        $("#CreateFormDiv").html("");
+
+        focusAction("tableContainer");
+
+    });
+</script>

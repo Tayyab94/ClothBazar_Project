@@ -1,0 +1,31 @@
+﻿@model BazarCloth.Web.Models.ViewModels.CheckOutViewModel
+
+@{ 
+    decimal total = 0;
+}
+
+@if(Model!=null)
+{
+    if(Model.carProductList!=null && Model.carProductList.Count>0)
+    {
+        <div>
+            @foreach (var item in Model.carProductList)
+            {
+                var ProductQuantity = Model.CarProductIDs.Where(x => x == item.Id).Count();
+
+                //total = total + (item.Price * ProductQuantity);  This line is also use to calculate the Total 
+                <div>
+                    Name - @item.Name Price - @item.Price Quantity - @ProductQuantity Total Price - @(ProductQuantity*item.Price)
+                </div>
+            }
+        </div>
+        <div>
+            Total Bill -@Model.carProductList.Sum(x => x.Price * Model.CarProductIDs.Where(c => c == x.Id).Count());
+        </div>
+    }
+    else
+    {
+        <div>No Product in the Cart..</div>
+    }
+}
+

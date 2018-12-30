@@ -1,0 +1,79 @@
+﻿@model BazarCloth.Web.Models.ViewModels.ShopGalleryFilterViewModel
+@{
+
+
+    var ImageUrl = "/Content/noimage.png";
+
+}
+
+<div class="filter-shop clearfix">
+    <p class="showing-product float-right">
+        Showing @(((Model.Pager.CurrentPage - 1) * Model.Pager.PageSize) + 1)– @(((Model.Pager.CurrentPage - 1) * Model.Pager.PageSize) + (Model.Products.Count< Model.Pager.PageSize ?Model.Products.Count:Model.Pager.PageSize)) of @Model.Pager.TotalItems Products
+    </p>
+</div><!-- /.filte-shop -->
+
+<div class="product-content product-threecolumn product-slidebar clearfix">
+    <ul class="product style2 sd1">
+
+        @foreach (var pro in Model.Products)
+        {
+            string imgSrc = !string.IsNullOrEmpty(pro.ImageUrl) ? pro.ImageUrl : ImageUrl;
+            <li class="product-item">
+                <div class="product-thumb clearfix">
+                    <a href="@Url.Action("Details","Product",new { id=pro.Id})">
+                        <img src="@imgSrc" alt="image">
+                    </a>
+                </div>
+                <div class="product-info clearfix">
+                    <span class="product-title">@pro.Name</span>
+                    <div class="price">
+                        <ins>
+                            <span class="amount">$@pro.Price</span>
+                        </ins>
+                    </div>
+                </div>
+                <div class="add-to-cart text-center">
+                    <a href="#">ADD TO CART</a>
+                </div>
+                <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
+            </li>
+        }
+
+
+
+    </ul><!-- /.product -->
+</div><!-- /.product-content -->
+
+
+<div class="product-pagination text-center clearfix">
+    @if (Model.Pager != null && Model.Pager.TotalPages > 1)
+    {
+    <ul class="flat-pagination">
+        @if (Model.Pager.CurrentPage > 1)
+        {
+            <li class="prev">
+                <a href="@Url.Action("Index","shop",new { pageNo=Model.Pager.CurrentPage-1,CataId=Model.cataId,SortBy=Model.SortBy})"><i class="fa fa-angle-left"></i></a>
+            </li>
+        }
+
+        @for (int page = Model.Pager.StartPage; page < Model.Pager.EndPage; page++)
+        {
+            string activeClass = Model.Pager.CurrentPage == page ? "acive bg-info" : string.Empty;
+
+            @*<button class="@activeClass pageButtons" data-pageNo="@page">@page</button>*@
+            <li><a class="@activeClass" href="@Url.Action("Index","Shop",new {pageNo=page ,CataId=Model.cataId,SortBy=Model.SortBy})">@page</a></li>
+        }
+
+        @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+        {
+
+            <li><a href="@Url.Action("Index","Shop",new {pageNo=Model.Pager.CurrentPage+1,CataId=Model.cataId,SortBy=Model.SortBy})"><i class="fa fa-angle-right"></i></a></li>
+            <li><a href="@Url.Action("Index","Shop",new {pageNo=Model.Pager.EndPage,CataId=Model.cataId,SortBy=Model.SortBy})">>></a></li>
+
+        }
+
+    </ul><!-- /.flat-pagination -->
+
+    }
+
+</div>

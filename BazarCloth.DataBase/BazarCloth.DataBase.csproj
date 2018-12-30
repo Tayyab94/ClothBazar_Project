@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0FF78A01-A300-4A6B-ADA3-4601D5D491AF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BazarCloth.DataBase</RootNamespace>
+    <AssemblyName>BazarCloth.DataBase</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CbContext.cs" />
+    <Compile Include="Migrations\201812142130512_AddProductAndCatagoryTableintoDb.cs" />
+    <Compile Include="Migrations\201812142130512_AddProductAndCatagoryTableintoDb.Designer.cs">
+      <DependentUpon>201812142130512_AddProductAndCatagoryTableintoDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812172050367_AddImgeURLIntoCatagoryTable.cs" />
+    <Compile Include="Migrations\201812172050367_AddImgeURLIntoCatagoryTable.Designer.cs">
+      <DependentUpon>201812172050367_AddImgeURLIntoCatagoryTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812191713133_AddIsFeaturedPropertyIntoCatagoryTable.cs" />
+    <Compile Include="Migrations\201812191713133_AddIsFeaturedPropertyIntoCatagoryTable.Designer.cs">
+      <DependentUpon>201812191713133_AddIsFeaturedPropertyIntoCatagoryTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812211741199_AddBazarClothConfigTable.cs" />
+    <Compile Include="Migrations\201812211741199_AddBazarClothConfigTable.Designer.cs">
+      <DependentUpon>201812211741199_AddBazarClothConfigTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812231503128_AddImageUrlProperty_Into_ProductTabale.cs" />
+    <Compile Include="Migrations\201812231503128_AddImageUrlProperty_Into_ProductTabale.Designer.cs">
+      <DependentUpon>201812231503128_AddImageUrlProperty_Into_ProductTabale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812232012540_AddCategoryId_intoProduct.cs" />
+    <Compile Include="Migrations\201812232012540_AddCategoryId_intoProduct.Designer.cs">
+      <DependentUpon>201812232012540_AddCategoryId_intoProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812232014312_RemoveCategoryId_intoProduct.cs" />
+    <Compile Include="Migrations\201812232014312_RemoveCategoryId_intoProduct.Designer.cs">
+      <DependentUpon>201812232014312_RemoveCategoryId_intoProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812232016428_againAddCategoryId_intoProduct.cs" />
+    <Compile Include="Migrations\201812232016428_againAddCategoryId_intoProduct.Designer.cs">
+      <DependentUpon>201812232016428_againAddCategoryId_intoProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812232017358_againremCategoryId_intoProduct.cs" />
+    <Compile Include="Migrations\201812232017358_againremCategoryId_intoProduct.Designer.cs">
+      <DependentUpon>201812232017358_againremCategoryId_intoProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812232021057_OneceagainremCategoryId_intoProduct.cs" />
+    <Compile Include="Migrations\201812232021057_OneceagainremCategoryId_intoProduct.Designer.cs">
+      <DependentUpon>201812232021057_OneceagainremCategoryId_intoProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812251007599_ApplyTheAnnotationInProductAndCategoryClasses.cs" />
+    <Compile Include="Migrations\201812251007599_ApplyTheAnnotationInProductAndCategoryClasses.Designer.cs">
+      <DependentUpon>201812251007599_ApplyTheAnnotationInProductAndCategoryClasses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BazarCloth.Entities\BazarCloth.Entities.csproj">
+      <Project>{760ff537-c094-477a-b849-b5a88cc27b7e}</Project>
+      <Name>BazarCloth.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201812142130512_AddProductAndCatagoryTableintoDb.resx">
+      <DependentUpon>201812142130512_AddProductAndCatagoryTableintoDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812172050367_AddImgeURLIntoCatagoryTable.resx">
+      <DependentUpon>201812172050367_AddImgeURLIntoCatagoryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812191713133_AddIsFeaturedPropertyIntoCatagoryTable.resx">
+      <DependentUpon>201812191713133_AddIsFeaturedPropertyIntoCatagoryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812211741199_AddBazarClothConfigTable.resx">
+      <DependentUpon>201812211741199_AddBazarClothConfigTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812231503128_AddImageUrlProperty_Into_ProductTabale.resx">
+      <DependentUpon>201812231503128_AddImageUrlProperty_Into_ProductTabale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812232012540_AddCategoryId_intoProduct.resx">
+      <DependentUpon>201812232012540_AddCategoryId_intoProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812232014312_RemoveCategoryId_intoProduct.resx">
+      <DependentUpon>201812232014312_RemoveCategoryId_intoProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812232016428_againAddCategoryId_intoProduct.resx">
+      <DependentUpon>201812232016428_againAddCategoryId_intoProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812232017358_againremCategoryId_intoProduct.resx">
+      <DependentUpon>201812232017358_againremCategoryId_intoProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812232021057_OneceagainremCategoryId_intoProduct.resx">
+      <DependentUpon>201812232021057_OneceagainremCategoryId_intoProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812251007599_ApplyTheAnnotationInProductAndCategoryClasses.resx">
+      <DependentUpon>201812251007599_ApplyTheAnnotationInProductAndCategoryClasses.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

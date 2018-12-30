@@ -1,0 +1,173 @@
+﻿
+
+@model BazarCloth.Web.Models.ViewModels.newProductViewModel
+
+@{
+    ViewBag.Title = "Create";
+    string Imgsrc = "/Content/noimage.png";
+}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<h2 class="text-center text-primary">Create Product</h2>
+
+@*<form method="post">
+        <label>Name</label>
+        <input name="name" placeholder="Catagroy's Name" />
+        <br />
+
+        <label>Description</label>
+        <input name="description" placeholder="Catagroy's Name" />
+        <br />
+
+
+        <label>Price</label>
+        <input name="price" placeholder="Catagroy's Name" />
+        <br />
+
+        <button type="submit">Save</button>
+    </form>*@
+
+<form id="CrreateProductFrm">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label>Catagory</label>
+                <select class="form-control" name="CatagoryId">
+                    @foreach (var cat in Model.AvailableCategories)
+                    {
+                        <option value="@cat.Id">@cat.Name</option>
+                    }
+                </select>
+
+            </div>
+            <div class="form-group">
+                <label>Name</label>
+                <input name="Name" class="form-control" placeholder="Catagroy's Name" />
+
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input name="Description" class="form-control" placeholder="Catagroy's Name" />
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input type="number" id="price" name="Price" class="form-control"    placeholder="Catagroy's Price" />
+            </div>
+            <div class="form-group">
+                <label>Image</label>
+                <input id="ImageUrl" name="ImageUrl" type="hidden" />
+                <input id="imageUpload" name="Image" type="file" class="form-control" accept=".png,.jpg" />
+
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <img id="ProductImge" src="@Imgsrc" class="img-responsice" />
+        </div>
+    </div>
+
+    <button id="cretebtnProduct" class="btn btn-primary" type="button">Save</button>
+    <button id="cancelbtnProduct" class="btn btn-primary" type="button">Cancel</button>
+</form>
+
+<script type="text/javascript">
+
+
+    $("#price").on("keypress keyup blur", function (event) {
+        $(this).val($(this).val().replace(/[^\d].+/, ""));
+        if ((event.which < 48 || event.which > 57)) {
+
+            event.preventDefault();
+        }
+    });
+      $("#imageUpload").change(function () {
+
+        var element = this;
+
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("Photo", file);
+        }
+        $.ajax({
+            url:'@Url.Action("UploadImage", "Shared")',    //'/Shared/UploadImage',
+            type: 'POST',
+            dataType: 'Json',
+            data: formData,
+            contentType: false,
+            processData: false
+
+        }).done(function (response) {
+
+            console.log(response);
+            if (response.Success == true) {
+
+                $("#ImageUrl").val(response.ImageURL);
+                $("#ProductImge").attr('src', response.ImageURL);
+            }
+        }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Something is wrong")
+        });
+    });
+    $("#CrreateProductFrm").validate({
+        rules: {
+
+            Name: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+            Description: {
+                maxlength: 50
+            },
+            Price:{
+                range:[1,100]
+            }
+        },
+        messages: {
+            Name: {
+                required: "Name is Required!",
+                minlength: "MinLength is 5",
+                maxlength: "Max length is 50"
+            },
+            Description: {
+                range: "Max length is 50"
+            },
+            Price: {
+                range:"Price should be ($1 - $100)"
+            }
+        }
+    });
+
+    $("#cretebtnProduct").click(function () {
+
+        if ($("#CrreateProductFrm").valid()) {
+                $.ajax({
+            url:'@Url.Action("Create","Product")', //'/Product/Create',
+            type: 'POST',
+            data: $("#CrreateProductFrm").serialize()
+        }).done(function (response) {
+            $("#tableContainer").html(response);
+            $("#CreateFormDiv").html("");
+            focusAction("tableContainer");
+            }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                swal("Warning!", "Fill your Required fields (*)!", "error");
+            });
+        }
+        else {
+            swal("Warning JS!", "Fill your Required fields (*)!", "error");
+        }
+    });
+
+    $("#cancelbtnProduct").click(function () {
+
+        $("#CreateFormDiv").html("");
+
+        focusAction("tableContainer");
+
+    });
+</script>

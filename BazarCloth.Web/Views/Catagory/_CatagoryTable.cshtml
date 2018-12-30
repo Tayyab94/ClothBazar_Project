@@ -1,0 +1,235 @@
+﻿@model BazarCloth.Web.Models.ViewModels.CategorySearchViewModel
+
+<div>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <input name="search" class="form-control" placeholder="Search" id="searchcatagotyTxt" value="@Model.SearchItem" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="row">
+
+                        <div class="col-md-4 pr-0">
+                            <input type="button" id="btnSearchCatagory" class="btn btn-primary form-control" value="Search" />
+                        </div>
+                        <div class="col-md-4 pr-0">
+                            <button class="btn btn-primary form-control" type="button" id="resetBtn">Reset</button>
+                        </div>
+                        <div class="col-md-4 pr-0">
+                            <input type="button" id="btnNew" class="btn btn-primary form-control" value="Add" />
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <td class="font-weight-bold" scope="col">Name</td>
+                <td class="font-weight-bold" scope="col">Des</td>
+                <td class="font-weight-bold" scope="col">Image</td>
+                <td class="font-weight-bold" scope="col">Product's Name  </td>
+                <td class="font-weight-bold" scope="col">Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Catagories != null && Model.Catagories.Count > 0)
+            {
+                foreach (var item in Model.Catagories)
+                {
+                    <tr>
+                        <td><a href="/Catagory/Edit/@item.Id"><h6>@item.Name</h6></a></td>
+
+                        <td>@item.Description</td>
+                        <td>
+                            <img src="@item.ImageUrl" class="img-responsive" style="width:100px; height:50px" />
+
+                            @*@if (item.ImageUrl != null)
+                                {
+                                <text>-</text>
+                                }
+                                else
+                                {
+
+                                }*@
+                        </td>
+                        <td>
+                            @item.Products.Count (Name =
+
+                            @foreach (var cat in item.Products)
+                            {
+                                <text>@cat.Name ,</text>
+                            }
+                            )
+                        </td>
+                        <td>
+                            <button type="button" class="btnEdit" data-id="@item.Id">Edit</button>
+                            <button type="button" class="btnDelete" data-id="@item.Id">Delete</button>
+
+                            @*@Html.ActionLink("Delete", "Delete", "Catagory", new { id = item.Id }, new { @class = "btn btn-danger" })*@
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="3" class="text-danger">No Categories found.</td></tr>
+            }
+
+        </tbody>
+    </table>
+
+    <div>
+        @if (Model.Pager != null && Model.Pager.TotalPages > 1)
+        {
+
+            if (Model.Pager.CurrentPage > 1)
+            {
+
+                <button class="pageButtons" data-pageNo="1">first</button>
+
+                <button class="pageButtons" data-pageNo="@(Model.Pager.CurrentPage - 1)">Previous</button>
+            }
+
+
+            for (int page = Model.Pager.StartPage; page < Model.Pager.EndPage; page++)
+            {
+                string activeClass = Model.Pager.CurrentPage == page ? "acive bg-info" : string.Empty;
+
+                <button class="@activeClass pageButtons"  data-pageNo="@page">@page</button>
+            }
+
+            if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+            {
+                <button class="pageButtons"  data-pageNo="@(Model.Pager.CurrentPage+1)">Next</button>
+
+                <button class="pageButtons"  data-pageNo="@(Model.Pager.EndPage)">Last</button>
+
+            }
+
+        }
+    </div>
+</div>
+
+<script>
+
+
+    $(".pageButtons").click(function () {
+     
+        $.ajax(
+            {
+                url: '@Url.Action("CatagoryTable", "Catagory")',
+                data: {
+                    pageNo: $(this).attr("data-pageNo"),
+                    search:'@Model.SearchItem'
+                }
+
+            }).done(function (result) {
+              
+                $("#tableContiner").html(result);
+            
+            }).fail(function (XMLHttpRequest, textStatus, errorThrown) { alert("Fail") });
+    });
+    $("#btnSearchCatagory").click(function () {
+       
+        var CataoryText = $("#searchcatagotyTxt").val();
+
+        $.ajax(
+            {
+                url: '@Url.Action("CatagoryTable", "Catagory")',
+                data: { search: CataoryText }
+            }).done(function (response) {
+                $("#tableContiner").html(response);
+
+            }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+    });
+    $("#resetBtn").click(function () {
+   
+        var CataoryText ='';
+
+        $.ajax(
+            {
+                url: '@Url.Action("CatagoryTable", "Catagory")',
+                data: { search: CataoryText }
+            }).done(function (response) {
+                $("#tableContiner").html(response);
+
+            }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+    });
+
+    $("#btnNew").click(function () {
+   
+        $.ajax(
+            {
+                url: '@Url.Action("Create", "Catagory")',
+                type: "GET",
+
+            }
+        ).done(function (result) {
+            $("#actionContainer").html(result);
+            focusAction("actionContainer");
+            //focusAction(actionContainer);
+            }).fail(function () {
+                alert("FAIL")
+        });
+    });
+
+    $(".btnEdit").click(function (XMLHttpRequest, textStatus, errorThrown) {
+
+        $.ajax(
+            {
+                url: '@Url.Action("Edit", "Catagory")',
+                data: { id: $(this).attr("data-id") }
+            }).done(function (response) {
+                $("#actionContainer").html(response);
+
+                focusAction("actionContainer");
+
+            }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+    });
+
+    $(".btnDelete").click(function () {
+
+        var confirmationMessage = confirm("Are you Sure You want to Delete");
+
+        if (confirmationMessage) {
+            $.ajax(
+                {
+                    url: '@Url.Action("Delete", "Catagory")',
+                    data: { id: $(this).attr("data-id") },
+                    type:"POST"
+                }).done(function (result) {
+
+                    $("#tableContiner").html(result);
+                    focusAction("tableContiner");
+                }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            });
+
+        }
+    });
+
+    //function focusAction() {
+    //    $("html, body").animate({
+    //        scrollTop: $("#actionContainer").offset().top - 100
+    //    }, 100);
+    //}
+</script>

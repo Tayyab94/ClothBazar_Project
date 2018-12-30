@@ -1,0 +1,124 @@
+﻿@model BazarCloth.Web.Models.ViewModels.EditCategoryViewModel
+@{
+    ViewBag.Title = "Edit";
+
+    var trueCheck = Model.isFeatured ? "checked" : string.Empty;
+    var falseCheck = !Model.isFeatured ? "checked" : string.Empty;
+
+    var ImageUrl=!string.IsNullOrEmpty(Model.ImageUrl)?Model.ImageUrl: "/Content/noimage.png";
+}
+
+
+<h2 class="title text-center text-primary">Edit Catagory</h2>
+
+<form id="editCatagoryFrm">
+    <input type="hidden" name="ID" value="@Model.Id" />
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-gorup">
+                <label>Name</label>
+                <input name="name" class="form-control" placeholder="Catagroy's Name" value="@Model.Name" />
+            </div>
+            <div class="form-gorup">
+                <label>Description</label>
+                <input name="description" class="form-control" placeholder="Catagroy's Name" value="@Model.Description" />
+            </div>
+            <div class="form-gorup">
+                <label>Image</label>
+                <input type="hidden" id="ImageUrl" name="ImageUrl" value="@Model.ImageUrl" />
+                <input class="form-control" id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
+            </div>
+            <div class="form-gorup">
+                <label>Freatured</label>
+                <div class="input-group">
+                    <div class="radio from-control">
+                        <input type="radio" name="isFeatured" value="True" @trueCheck />Ture
+                    </div>
+                    <div class="radio from-control">
+                        <input type="radio" name="isFeatured" value="False" @falseCheck />False
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="thumb">
+                <img src="@ImageUrl" class="img-thumbnail img-fluid" id="catagoryImage" />
+            </div>
+        </div>
+    </div>
+
+
+    <button id="updateBtn" type="button" class="btn btn-primary">Update</button>
+    <button id="cancelBtn" type="button" class="btn btn-primary">Cancel</button>
+</form>
+
+
+<script>
+
+    $("#imageUpload").change(function () {
+        alert("call")
+        var element = this;
+
+        var formData = new FormData();
+
+
+        var totalFiles = element.files.length;
+
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+
+            formData.append("Photo", file);
+        }
+
+        $.ajax({
+
+            type: "POST",
+            url: '@Url.Action("UploadImage", "Shared")',
+            dataType: "Json",
+            data: formData,
+            contentType: false,
+            processData: false
+        }).done(function (result) {
+            console.log(result);
+
+            if (result.Success) {
+                $("#ImageUrl").val(result.ImageURL);
+                $("#catagoryImage").attr("src", result.ImageURL);
+            }
+
+
+        }).fail(function (XMLHttpRequest,textStatus,errorThrown) {
+
+            alert("Fail");
+        });
+
+    });
+
+    $("#updateBtn").click(function () {
+
+        $.ajax({
+            url: '@Url.Action("Edit", "Catagory")',
+            type: "POST",
+            data: $("#editCatagoryFrm").serialize()
+        }).done(function (result) {
+            $("#tableContiner").html(result);
+            $("#actionContainer").html("");
+
+            focusAction("tableContiner");
+
+            }).fail(function (XMLHttpRequest,textStatus,errorThrown) {
+                alert("Fail")
+        });
+    });
+
+
+    $("#cancelBtn").click(function () {
+
+        $("#actionContainer").html("");
+
+        focusAction("tableContiner");
+    });
+</script>

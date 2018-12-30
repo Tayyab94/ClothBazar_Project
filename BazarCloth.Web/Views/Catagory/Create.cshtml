@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    string Imgsrc = "/Content/noimage.png";
+}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+@*//Validataion Cdn Jquery*@
+
+<div class="title-section margin-bottom-52">
+    <h2 class="title text-center text-primary">Create Catagory</h2>
+</div>
+<div class="container">
+    <form id="CrreateCatagoryFrm">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label>Name <span class="text-danger">*</span></label>
+                    <input name="name" class="form-control" placeholder="Catagroy's Name" />
+
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input name="description" class="form-control" placeholder="Catagroy's Name" />
+
+                </div>
+                <div class="form-group">
+                    <label>Image</label>
+                    <input id="ImageUrl" name="ImageUrl" type="hidden" />
+                    <input id="imageUpload" name="Image" type="file" class="form-control" accept=".png,.jpg" />
+
+                </div>
+                <div class="form-check">
+                    <label>Freatured</label>
+                    <input type="radio" name="isFeatured" value="True" checked />Ture
+                    <input type="radio" name="isFeatured" value="False" />False
+                </div>
+            </div>
+            <div class="col-md-4">
+
+                <img id="catagoryImge" src="@Imgsrc" class="img-responsice" />
+
+            </div>
+        </div>
+
+        @*<button id="cretebtnProduct" class="btn btn-primary" type="button">Save</button>*@
+        <button id="saveBtn" type="button" class="btn btn-primary">Save</button>
+        <button id="cancelBtn" type="button" class="btn btn-primary">Cancel</button>
+    </form>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+
+
+
+    $("#imageUpload").change(function () {
+
+        var element = this;
+
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("Photo", file);
+        }
+        $.ajax({
+            url:'@Url.Action("UploadImage", "Shared")',    //'/Shared/UploadImage',
+            type: 'POST',
+            dataType: 'Json',
+            data: formData,
+            contentType: false,
+            processData: false
+
+        }).done(function (response) {
+
+            console.log(response);
+            if (response.Success == true) {
+
+                $("#ImageUrl").val(response.ImageURL);
+                $("#catagoryImge").attr('src', response.ImageURL);
+            }
+        }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            //alert("Something is wrong")
+
+            swal("Good job!", "You clicked the button!", "error");
+        });
+    });
+
+    $("#CrreateCatagoryFrm").validate({
+        rules: {
+            
+            name: {
+                required: true,
+                minlength: 5,
+                maxlength:50
+            },
+            description: {
+                maxlength: 50
+            }
+        },
+        messages: {
+            name: {
+                required: "Name is Required!",
+                minlength: "MinLength is 5",
+                maxlength:"Max length is 50"
+            },
+            description: {
+                maxlength: "Max length is 50"
+            }
+        }
+    });
+
+    $("#saveBtn").click(function () {
+        debugger;
+        if ($("#CrreateCatagoryFrm").valid()) {
+            $.ajax(
+                {
+                    url: '@Url.Action("Create", "Catagory")',
+                    data: $("#CrreateCatagoryFrm").serialize(),
+                    type: "POST"
+                }).done(function (response) {
+                    $("#tableContiner").html(response);
+                    $("#actionContainer").html("");
+                    focusAction("tableContiner");
+                }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+
+                    swal("Warning!", "Fill your Required fields (*)!", "error");
+                });
+        }
+        else
+        {
+            swal("Warning JS!", "Fill your Required fields (*)!", "error");
+        }
+   
+    });
+
+
+    $("#cancelBtn").click(function () {
+
+        $("#actionContainer").html("");
+        focusAction("tableContiner");
+
+    });
+</script>
