@@ -43,7 +43,10 @@ namespace BazarCloth.Web.Controllers
             var pageSize = Project_ConfigurationServices.Instance.GetPageSizeForShopPage(); 
 
             ShopGalleryViewModel model = new ShopGalleryViewModel();
+
             model.FeaturedCatagories = CatagoriesService.Instance.GetFeaturedCatagoriesForShopPage();
+
+            model.searchITem = sreachProduct;
             if (SortBy.HasValue)
             {
                 model.SortBy = SortBy.Value;
@@ -74,7 +77,7 @@ namespace BazarCloth.Web.Controllers
 
 
             pageNo = pageNo.HasValue ? pageNo.Value > 1 ? pageNo.Value : 1 : 1;
-
+            model.searchITem = sreachProduct;
             if (SortBy.HasValue)
             {
                 model.SortBy = SortBy.Value;

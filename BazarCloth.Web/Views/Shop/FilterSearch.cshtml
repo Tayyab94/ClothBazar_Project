@@ -48,32 +48,53 @@
 <div class="product-pagination text-center clearfix">
     @if (Model.Pager != null && Model.Pager.TotalPages > 1)
     {
-    <ul class="flat-pagination">
-        @if (Model.Pager.CurrentPage > 1)
-        {
-            <li class="prev">
-                <a href="@Url.Action("Index","shop",new { pageNo=Model.Pager.CurrentPage-1,CataId=Model.cataId,SortBy=Model.SortBy})"><i class="fa fa-angle-left"></i></a>
-            </li>
-        }
+        <ul class="flat-pagination">
+            @if (Model.Pager.CurrentPage > 1)
+            {
+                <li class="prev">
+                    <a data-href="@Url.Action("FilterSearch","shop",new { pageNo=Model.Pager.CurrentPage-1,CataId=Model.cataId,SortBy=Model.SortBy})" class="pagerDataLink"><i class="fa fa-angle-left"></i></a>
+                </li>
+            }
 
-        @for (int page = Model.Pager.StartPage; page < Model.Pager.EndPage; page++)
-        {
-            string activeClass = Model.Pager.CurrentPage == page ? "acive bg-info" : string.Empty;
+            @for (int page = Model.Pager.StartPage; page < Model.Pager.EndPage; page++)
+            {
+                string activeClass = Model.Pager.CurrentPage == page ? "acive bg-info" : string.Empty;
 
-            @*<button class="@activeClass pageButtons" data-pageNo="@page">@page</button>*@
-            <li><a class="@activeClass" href="@Url.Action("Index","Shop",new {pageNo=page ,CataId=Model.cataId,SortBy=Model.SortBy})">@page</a></li>
-        }
+                @*<button class="@activeClass pageButtons" data-pageNo="@page">@page</button>*@
+                <li><a class="@activeClass pagerDataLink" data-href="@Url.Action("FilterSearch","Shop",new {pageNo=page ,CataId=Model.cataId,SortBy=Model.SortBy})">@page</a></li>
+            }
 
-        @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
-        {
+            @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+            {
 
-            <li><a href="@Url.Action("Index","Shop",new {pageNo=Model.Pager.CurrentPage+1,CataId=Model.cataId,SortBy=Model.SortBy})"><i class="fa fa-angle-right"></i></a></li>
-            <li><a href="@Url.Action("Index","Shop",new {pageNo=Model.Pager.EndPage,CataId=Model.cataId,SortBy=Model.SortBy})">>></a></li>
+                <li><a data-href="@Url.Action("FilterSearch","Shop",new {pageNo=Model.Pager.CurrentPage+1,CataId=Model.cataId,SortBy=Model.SortBy})" class="pagerDataLink"><i class="fa fa-angle-right"></i></a></li>
+                <li><a data-href="@Url.Action("FilterSearch","Shop",new {pageNo=Model.Pager.EndPage,CataId=Model.cataId,SortBy=Model.SortBy})" class="pagerDataLink">>></a></li>
 
-        }
+            }
 
-    </ul><!-- /.flat-pagination -->
+        </ul><!-- /.flat-pagination -->
 
     }
-
+    <input type="hidden" id="searchITem" value="@Model.searchITem" />
+    <input type="hidden" id="SortBy" value="@Model.SortBy" />
+    <input type="hidden" id="cataId" value="@Model.cataId" />
 </div>
+
+
+
+
+<script>
+
+
+    $(".pagerDataLink").click(function () {
+
+        var url = $(this).attr("data-href");
+
+        if (url != "" || url != undefined) {
+            alert(url);
+
+            GetData(url);
+        }
+    });
+
+</script>

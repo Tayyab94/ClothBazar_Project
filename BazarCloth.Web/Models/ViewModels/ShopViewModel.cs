@@ -17,6 +17,8 @@ namespace BazarCloth.Web.Models.ViewModels
    public class ShopGalleryViewModel
     {
         public int MaximumPrice { get; set; }
+
+        public string searchITem { get; set; }
         public List<Product> Products { get; set; }
 
         public int? SortBy { get; set; }
@@ -30,6 +32,7 @@ namespace BazarCloth.Web.Models.ViewModels
     public class ShopGalleryFilterViewModel
     {
         public int? cataId { get; set; }
+        public string searchITem { get; set; }
 
         public List<Product> Products { get; set; }
 

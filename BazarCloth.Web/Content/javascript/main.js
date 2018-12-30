@@ -377,6 +377,9 @@
       });
     };
 
+  
+
+    };
     //var flatPrice = function() {
     //    if( $().slider ) {
     //        $( function() {
@@ -831,6 +834,8 @@
       flatEffectDir();
       flatIsotope();
       flatCarouselOwl();
-      flatContentBox();
+        flatContentBox();
+        //removeSLider();
+        //showSlider();
    	});
 })(jQuery);
