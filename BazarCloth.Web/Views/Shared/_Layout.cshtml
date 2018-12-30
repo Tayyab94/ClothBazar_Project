@@ -105,18 +105,20 @@
                         }
 
                         <li class="box-cart nav-top-cart-wrapper">
-                            <a class="icon_cart nav-cart-trigger active" href="#"><span>3</span></a>
-                            <div class="nav-shop-cart">
-                                <div class="widget_shopping_cart_content">
-                                    <div class="woocommerce-min-cart-wrap">
-                                        <ul class="woocommerce-mini-cart cart_list product_list_widget ">
-                                            <li class="woocommerce-mini-cart-item mini_cart_item">
-                                                <span>No Items in Shopping Cart</span>
-                                            </li>
-                                        </ul>
-                                    </div><!-- /.widget_shopping_cart_content -->
-                                </div>
-                            </div><!-- /.nav-shop-cart -->
+                            <a class="icon_cart nav-cart-trigger active" href="@Url.Action("checkout","shop")"><span class="cartProductCount">0</span></a>
+                            @*<div class="nav-shop-cart">
+                                    <div class="widget_shopping_cart_content">
+                                        <div class="woocommerce-min-cart-wrap">
+                                            <ul class="woocommerce-mini-cart cart_list product_list_widget ">
+                                                <li class="woocommerce-mini-cart-item mini_cart_item">
+                                                    <span>No Items in Shopping Cart</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>*@
+
+                            <!-- /.nav-shop-cart -->
                         </li>
                     </ul><!-- /.menu-extra -->
                     <div class="nav-wrap">
@@ -124,33 +126,33 @@
                             <ul class="menu">
                                 <li class="active">
                                     <a href="@Url.Action("Index","Home")">HOME</a>
-                               
+
                                 </li>
                                 <li>
                                     <a href="@Url.Action("Index","Shop")">SHOP</a>
-                                
+
                                 </li>
                                 @*<li>
-                                    <a href="coming-soon.html">PAGE</a>
-                                    <ul class="submenu">
-                                        <li><a href="coming-soon.html">Coming Soon</a></li>
-                                        <li><a href="404.html"> Error 404</a></li>
-                                        <li><a href="faqs.html">FAQs</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="blog-list.html">BLOG</a>
-                                    <ul class="submenu">
-                                        <li><a href="blog-list.html">Blog List Full</a></li>
-                                        <li><a href="blog-list-1.html">Blog list Slide 1</a></li>
-                                        <li><a href="blog-list-2.html">Blog list Slide 2</a></li>
-                                        <li><a href="blog-grid.html">Blog Gird Full</a></li>
-                                        <li><a href="blog-grid-1.html">Blog Gird Slide</a></li>
-                                        <li><a href="blog-detail.html">Blog Details</a></li>
-                                    </ul>
-                                    
-                                   
-                                </li>*@
+                                        <a href="coming-soon.html">PAGE</a>
+                                        <ul class="submenu">
+                                            <li><a href="coming-soon.html">Coming Soon</a></li>
+                                            <li><a href="404.html"> Error 404</a></li>
+                                            <li><a href="faqs.html">FAQs</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="blog-list.html">BLOG</a>
+                                        <ul class="submenu">
+                                            <li><a href="blog-list.html">Blog List Full</a></li>
+                                            <li><a href="blog-list-1.html">Blog list Slide 1</a></li>
+                                            <li><a href="blog-list-2.html">Blog list Slide 2</a></li>
+                                            <li><a href="blog-grid.html">Blog Gird Full</a></li>
+                                            <li><a href="blog-grid-1.html">Blog Gird Slide</a></li>
+                                            <li><a href="blog-detail.html">Blog Details</a></li>
+                                        </ul>
+
+
+                                    </li>*@
                                 <li>
                                     <a href="contact.html">CONTACT</a>
                                     <ul class="submenu right-submenu">
@@ -291,6 +293,7 @@
     <!-- Javascript -->
 
     @RenderSection("CustomJquery", false)
+    <script src="~/Content/javascript/main.js"></script>
     <script src="~/Content/javascript/tether.min.js"></script>
     <script src="~/Content/javascript/bootstrap.min.js"></script>
     <script src="~/Content/javascript/jquery.easing.js"></script>
@@ -307,10 +310,10 @@
     <script src="~/Content/javascript/equalize.min.js"></script>
     <script src="~/Content/javascript/gmap3.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIEU6OT3xqCksCetQeNLIPps6-AYrhq-s&region=GB"></script>
-  
+
 
     <script src="~/Content/javascript/jquery.cookie.js"></script>
-    <script src="~/Content/javascript/main.js"></script>
+
 
     <!-- Revolution Slider -->
     <script src="~/Content/rev-slider/js/jquery.themepunch.tools.min.js"></script>

@@ -119,8 +119,6 @@
 
 
     function GetData(urld) {
-    
-        console.log("Called");
         $.ajax(
             {
                 url: urld,     @*//'@Url.Action("FilterSearch","Shop")',*@
@@ -141,7 +139,6 @@
 
     function PriceRangeChange() {
 
-        console.log("Called");
         $.ajax(
             {
                 url: '@Url.Action("FilterSearch","Shop")',
