@@ -21,5 +21,9 @@ namespace BazarCloth.DataBase
         public DbSet<Product> Products { get; set; }
 
         public DbSet<BazarClothConfig>  bazarClothConfigs { get; set; }
+        
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderItems> OrderItems { get; set; }
     }
 }

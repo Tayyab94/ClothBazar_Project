@@ -93,6 +93,14 @@
     <Compile Include="Migrations\201812251007599_ApplyTheAnnotationInProductAndCategoryClasses.Designer.cs">
       <DependentUpon>201812251007599_ApplyTheAnnotationInProductAndCategoryClasses.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901011744167_Add_OrderTable.cs" />
+    <Compile Include="Migrations\201901011744167_Add_OrderTable.Designer.cs">
+      <DependentUpon>201901011744167_Add_OrderTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901011746353_Add_OrderItem_Table_And_AddList_OrderItelINto_OrderTAble.cs" />
+    <Compile Include="Migrations\201901011746353_Add_OrderItem_Table_And_AddList_OrderItelINto_OrderTAble.Designer.cs">
+      <DependentUpon>201901011746353_Add_OrderItem_Table_And_AddList_OrderItelINto_OrderTAble.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -139,6 +147,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812251007599_ApplyTheAnnotationInProductAndCategoryClasses.resx">
       <DependentUpon>201812251007599_ApplyTheAnnotationInProductAndCategoryClasses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901011744167_Add_OrderTable.resx">
+      <DependentUpon>201901011744167_Add_OrderTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901011746353_Add_OrderItem_Table_And_AddList_OrderItelINto_OrderTAble.resx">
+      <DependentUpon>201901011746353_Add_OrderItem_Table_And_AddList_OrderItelINto_OrderTAble.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

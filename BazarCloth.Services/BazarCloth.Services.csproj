@@ -52,6 +52,7 @@
     <Compile Include="CatagoriesService.cs" />
     <Compile Include="Project_ConfigurationServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShopService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BazarCloth.DataBase\BazarCloth.DataBase.csproj">

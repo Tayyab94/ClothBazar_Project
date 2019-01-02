@@ -185,6 +185,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812291436578_InitialCreate.cs" />
+    <Compile Include="Migrations\201812291436578_InitialCreate.Designer.cs">
+      <DependentUpon>201812291436578_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901011500243_ChangesIntoUserTable.cs" />
+    <Compile Include="Migrations\201901011500243_ChangesIntoUserTable.Designer.cs">
+      <DependentUpon>201901011500243_ChangesIntoUserTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -266,6 +275,8 @@
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Shop\Index.cshtml" />
     <Content Include="Views\Shop\FilterSearch.cshtml" />
+    <Content Include="Views\Home\ContactUs.cshtml" />
+    <Content Include="Views\Home\service.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -290,6 +301,14 @@
       <Project>{0dd270b8-71ed-4dc2-8759-062047653b37}</Project>
       <Name>BazarCloth.Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201812291436578_InitialCreate.resx">
+      <DependentUpon>201812291436578_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901011500243_ChangesIntoUserTable.resx">
+      <DependentUpon>201901011500243_ChangesIntoUserTable.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -42,9 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbcTayyab.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="BazarClothConfig.cs" />
     <Compile Include="Catagory.cs" />
+    <Compile Include="Order.cs" />
+    <Compile Include="OrderItems.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SortByEnum.cs" />

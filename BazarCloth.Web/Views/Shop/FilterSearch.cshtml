@@ -117,7 +117,7 @@
             //if you are not getting the Cookie its mean path is not set then uuse this
 
             //$.cookie('CartProduct', Produts.join('-'), {path:"/"});
-            $.cookie('CartProduct', products.join('-'));
+            $.cookie('CartProduct', products.join('-'), { path: '/' });
 
             UpdateCartProduct();
             swal("Done", "Product added Successfuly!", "success");

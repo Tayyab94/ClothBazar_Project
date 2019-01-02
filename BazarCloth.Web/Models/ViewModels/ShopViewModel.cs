@@ -12,6 +12,9 @@ namespace BazarCloth.Web.Models.ViewModels
         public List<Product> carProductList { get; set; }
 
         public List<int> CarProductIDs { get; set; }
+
+
+      public ApplicationUser Users { get; set; }
     }
 
    public class ShopGalleryViewModel

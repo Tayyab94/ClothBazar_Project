@@ -34,5 +34,15 @@ namespace BazarCloth.Web.Controllers
 
             return View();
         }
+
+        public ActionResult ContactUs()
+        {
+            return View();
+        }
+
+        public ActionResult service()
+        {
+            return View();
+        }
     }
 }
