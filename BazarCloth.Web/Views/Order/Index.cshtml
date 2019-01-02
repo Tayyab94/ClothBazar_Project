@@ -1,0 +1,178 @@
+﻿@model BazarCloth.Web.Models.ViewModels.OrderViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<div class="container">
+    <div id="tableContainer">
+        <div style="margin-top:20px;">
+            @*@using (Html.BeginForm("ProductTable", "Product", FormMethod.Post))
+            {
+
+            }*@
+
+
+            @*@using (Html.BeginForm("ProductTable", "Product", FormMethod.Post))
+            {
+                <input name="search" placeholder="Search" id="searchItem" />
+                <input type="submit" value="Search" />
+            }*@
+            @*<form method="post" action="/Product/ProductTable">
+            </form>*@
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <input name="search" class="form-control" placeholder="Search" id="searchItem" value="@Model.userID" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-4 pr-0">
+                                <input type="submit" id="btnSearch" class="btn btn-primary form-control" value="Search" />
+                            </div>
+                            <div class="col-md-4 pr-0">
+                                @*<input type="button" id="btnReset" class="btn btn-info form-control" value="Reset" />*@
+                                @Html.ActionLink("Reset","Index","Order",new { pageNo =1},new { @class= "btn btn-info form-control" })
+                            </div>
+                            @*<div class="col-md-4 pr-0">
+                                <input type="button" id="btnNew" class="btn btn-success form-control" value="Add" />
+                            </div>*@
+
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+        <hr />
+        <h2 class="text-center text-info">Product List</h2>
+        <div class="tableContainer">
+            <table class="table" id="ProductDataTable">
+                <thead class="thead-dark">
+                    <tr>
+                        <td class="font-weight-bold" scope="col">User-Id</td>
+                        <td class="font-weight-bold" scope="col">Total Pricce</td>
+                        <td class="font-weight-bold" scope="col">Status</td>
+                        <td class="font-weight-bold wrap-td" scope="col">Actions</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Orders != null && Model.Orders.Count > 0)
+                    {
+                        foreach (var item in Model.Orders)
+                        {
+                            <tr>
+                                <td>@item.UserId</td>
+                               
+                                <td>@item.TotalBill</td>
+                                 <td>
+                                   @item.Status
+                                </td>
+                                <td>
+                                    <a href="/Order/Details/@item.Id" class="btn btn-info">Details</a>
+                                </td>
+                            </tr>
+
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <th class="text-danger" colspan="4">No Order Found!</th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div>
+                @*@if (Model.PageNo != 1)
+                {
+
+                    <button class="pageButtons" id="previousRecords" data-pageNo="@(Model.PageNo -1)">Previous</button>
+                }
+                <button class="pageButtons" id="nexrRecords" data-pageNo="@(Model.PageNo +1)">Next</button>*@
+
+                @*@if (Model.Pager != null && Model.Pager.TotalPages > 1)
+                {
+
+                    if (Model.Pager.CurrentPage > 1)
+                    {
+
+                        <button class="pageButtons" data-pageNo="1">first</button>
+
+                        <button class="pageButtons" data-pageNo="@(Model.Pager.CurrentPage - 1)">Previous</button>
+                    }
+
+
+                    for (int page = Model.Pager.StartPage; page < Model.Pager.EndPage; page++)
+                    {
+                        string activeClass = Model.Pager.CurrentPage == page ? "acive bg-info" : string.Empty;
+
+                        <button class="@activeClass pageButtons" data-pageNo="@page">@page</button>
+                    }
+
+                    if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+                    {
+                        <button class="pageButtons" data-pageNo="@(Model.Pager.CurrentPage+1)">Next</button>
+
+                        <button class="pageButtons" data-pageNo="@(Model.Pager.EndPage)">Last</button>
+
+                    }
+
+                }*@
+
+                <div class="product-pagination text-center clearfix">
+                    @if (Model.Pager != null && Model.Pager.TotalPages > 1)
+                    {
+                        <ul class="flat-pagination">
+                            @if (Model.Pager.CurrentPage > 1)
+                            {
+                                <li class="prev">
+                                    <a class="pageButtons btn btn-secondary btn-sm" href="@Url.Action("Index","Order",new { userID=Model.userID,status=Model.status,pageNo=Model.Pager.CurrentPage - 1})" data-pageNo="@(Model.Pager.CurrentPage - 1)"><i class="fa fa-angle-left"></i></a>
+                                </li>
+                            }
+
+                            @for (int page = Model.Pager.StartPage; page < Model.Pager.EndPage; page++)
+                            {
+                                string activeClass = Model.Pager.CurrentPage == page ? "acive bg-info" : string.Empty;
+
+                                @*<button class="@activeClass pageButtons" data-pageNo="@page">@page</button>*@
+                                <li><a class="@activeClass pageButtons btn btn-secondary btn-sm" href="@Url.Action("Index","Order",new { userID=Model.userID,status=Model.status,pageNo=page})" data-pageNo="@page">@page</a></li>
+                            }
+
+
+                            @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+                            {
+
+                                <li><a class="pageButtons btn btn-secondary btn-sm" href="@Url.Action("Index","Order",new { userID=Model.userID,status=Model.status,pageNo=Model.Pager.CurrentPage + 1})" data-pageNo="@(Model.Pager.CurrentPage+1)"><i class="fa fa-angle-right"></i></a></li>
+                                <li><a class="pageButtons btn btn-secondary btn-sm" href="@Url.Action("Index","Order",new { userID=Model.userID,status=Model.status,pageNo=Model.Pager.EndPage})" data-pageNo="@(Model.Pager.EndPage)">>></a></li>
+
+                            }
+
+                        </ul><!-- /.flat-pagination -->
+
+                    }
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div id="CreateFormDiv">
+
+    </div>
+</div>
+
+
+<script>
+
+    function focusAction(controlToFocus) {
+        $("html, body").animate({
+            scrollTop: $("#" + controlToFocus).offset().top-100
+        }, 1000);
+    }
+</script>
+

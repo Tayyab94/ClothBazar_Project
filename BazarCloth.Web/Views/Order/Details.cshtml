@@ -1,0 +1,130 @@
+﻿
+@model BazarCloth.Web.Models.ViewModels.OrderDetailViewModel
+
+@{
+    ViewBag.Title = "Details"; decimal total = 0;
+}
+
+
+@if (Model != null)
+{
+    if (Model.Orders != null && Model!=null)
+    {
+        int i = 1;
+        <section class="flat-row flat-iconbox">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-4 order-md-2 mb-4">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-muted">Your cart</span>
+                            <span class="badge badge-secondary badge-pill">3</span>
+                        </h4>
+                        <ul class="list-group mb-3">
+                            @foreach (var item in Model.Orders.OrderItems)
+                            {
+                                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                    <div>
+                                        <h6 class="my-0">@i- @item.Product.Name <i style="float:right">Qty=> @item.Quantity</i> </h6>
+                                        <small class="text-muted">@(item.Product.Description.Length > 15 ? item.Product.Description.Substring(1, 12) : item.Product.Description)</small>
+                                    </div>
+                                    <span class="text-muted">$ @item.Product.Price  @(item.Product.Price * item.Quantity)</span>
+                                </li>
+                                i++;
+                            }
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Total (USD)</span>
+                                <strong>$ @Model.Orders.TotalBill</strong>
+                            </li>
+                        </ul>
+
+                        <form class="card p-2">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Promo code">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-secondary">Redeem</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-8 order-md-1">
+                        <h4 class="mb-3">Billing address</h4>
+                        <form class="needs-validation" novalidate="">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName">First name</label>
+                                    <input type="text" class="form-control" id="firstName" placeholder="" value="@Model.User.UserName" disabled>
+
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName">Emmai</label>
+                                    <input type="text" class="form-control" id="lastName" placeholder="" value="@Model.User.Email" disabled>
+
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email"><span class="text-muted">Address</span></label>
+                                @Html.TextBoxFor(c => c.User.Address, "", new { @class = "form-control" })
+
+                            </div>
+                            <hr class="mb-4">
+                            <div class="mb-3">
+                                <label for="email"><span class="text-muted">Address</span></label>
+                             <select name="Status" id="changeStatus">
+                                 @foreach (var orderStatus in Model.AvailableStatus)
+                                 {
+                                     var isSelected = orderStatus == Model.Orders.Status;
+
+                                     <option @(isSelected?"selected":string.Empty)>@orderStatus</option>
+                                 }
+                             </select>
+
+                            </div>
+                            @*<button id="placeOrderBtn" class="btn btn-primary btn-lg btn-block placeOrderBtn" type="submit">Continue to checkout</button>*@
+                            @*ye btn hai*@
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script type="text/javascript">
+
+            $("#changeStatus").change(function () {
+        
+                   $.ajax({
+                       url: '/Order/ChangeStatus',
+                       method:"GET",
+                       data: {
+                           status: $("#changeStatus").val(),
+                           id:'@Model.Orders.Id'
+                       }
+                   }).done(function (result) {
+                       console.log(result)
+                       if (result.Success === true) {
+                           swal({
+                               title: "Good job!",
+                               text: "Order Process Sussrsfuly!",
+                               icon: "success",
+                               button: "Aww Clickt.!",
+                           });
+
+                       } else {
+                           swal("Failed", "Unable to place order.", "warning");
+                       }
+                   }).fail(function (XMLHttpRequest,testStatus,errorThrown) {
+
+                       alert(fali);
+                   });
+
+               });
+        </script>
+
+    }
+    else
+    {
+        <div>No Order Detail..</div>
+    }
+}
+
+
